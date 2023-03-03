@@ -17,6 +17,6 @@ public class ChangeCameraFoV : MonoBehaviour
     public void OnPinchDeltaChanged(float amount)
     {
         mainCameraReference.fieldOfView = 
-            Mathf.Clamp(mainCameraReference.fieldOfView + (amount * Time.deltaTime * multiplier), minFOV, maxFOV);
+            Mathf.Clamp(mainCameraReference.fieldOfView + (amount * Time.deltaTime), minFOV, maxFOV);
     }
 }

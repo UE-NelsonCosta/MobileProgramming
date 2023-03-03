@@ -5,8 +5,8 @@ using UnityEngine.Events;
 [System.Serializable]
 public class TapGestureEvents
 {
-    public UnityEvent OnTapGestureEvent;
-    public UnityEvent OnDoubleTapGestureEvent;
+    public UnityEvent<Vector2> OnTapGestureEvent;
+    public UnityEvent<Vector2> OnDoubleTapGestureEvent;
 }
 
 [System.Serializable]
@@ -51,7 +51,13 @@ public class InputProcessor : MonoBehaviour
     private float TapTimer = 0.0f;
     private float TimeBetweenTaps = 0.0f;
     private int TapCounter = 0;
-    
+
+    private void Start()
+    { }
+
+    private void Test(float p)
+    { }
+
     private void Update()
     {
         Touch[] touches = Input.touches;
@@ -193,12 +199,12 @@ public class InputProcessor : MonoBehaviour
             {
                 if (TapCounter == 1)
                 {
-                    OnTapGesture();
+                    OnTapGesture(touches[0].position);
                 }
 
                 if (TapCounter == 2)
                 {
-                    OnDoubleTapGesture();
+                    OnDoubleTapGesture(touches[0].position);
                 }
                 
                 ResetTapTrackingVariables();
@@ -211,14 +217,14 @@ public class InputProcessor : MonoBehaviour
     
     #region EventsDispatching
 
-    private void OnTapGesture()
+    private void OnTapGesture(Vector2 positonOfTap)
     {
-        TapGestureEvents.OnTapGestureEvent.Invoke();
+        TapGestureEvents.OnTapGestureEvent.Invoke(positonOfTap);
     }
 
-    private void OnDoubleTapGesture()
+    private void OnDoubleTapGesture(Vector2 positonOfTap)
     {
-        TapGestureEvents.OnDoubleTapGestureEvent.Invoke();
+        TapGestureEvents.OnDoubleTapGestureEvent.Invoke(positonOfTap);
     }
 
     private void OnHoldGestureStarted()
